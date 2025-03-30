@@ -6,21 +6,6 @@ Welcome to the Stieregg Rentals project! This website is designed to provide use
 
 Stieregg Rentals offers a selection of rental properties, complete with detailed descriptions, images, and pricing information. The website is user-friendly and responsive, ensuring a seamless experience across devices.
 
-## Project Structure
-
-The project is organized as follows:
-
-```
-stieregg-rentals
-├── src
-│   ├── index.html        # Main HTML document
-│   ├── css
-│   │   └── styles.css    # Styles for the website
-│   └── js
-│       └── script.js     # JavaScript functionality
-└── README.md             # Project documentation
-```
-
 ## Setup Instructions
 
 1. Clone the repository:
@@ -33,7 +18,7 @@ stieregg-rentals
    cd stieregg-rentals
    ```
 
-3. Open the `src/index.html` file in your web browser to view the website.
+3. Open the `/index.html` file in your web browser to view the website.
 
 ## Technologies Used
 
