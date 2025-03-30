@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stieregg Rentals</title>
+    <link rel="icon" href="icons/logo.png" type="image/png">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Leaflet.js -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Swiper.js -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <style>
+        #map-container {
+            height: 35rem;
+            width: 100%;
+        }
+        header {
+            z-index: 1000;
+        }
+    </style>
+    <style>
+        header {
+            z-index: 1000;
+            position: sticky;
+            top: 0;
+            background-color: rgba(31, 41, 55, 0.95);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #map-container {
+            z-index: 0;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+    <style>
+        /* Prevent blueish taint by disabling selection */
+        .swiper-slide img {
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800">
+
+    <!-- Header Section -->
+    <header class="bg-gray-800 text-white p-4 sticky top-0 z-50">
+        <nav class="flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="index.html">
+                    <img src="icons/logo.png" alt="Stieregg Rentals Logo" class="w-10 h-10">
+                </a>
+                <a href="index.html" class="hover:underline">Home</a>
+                <a href="about.html" class="hover:underline lang-en hidden">About Us</a>
+                <a href="about.html" class="hover:underline lang-de">Über uns</a>
+            </div>
+            <div class="flex space-x-4">
+                <img id="lang-de" src="icons/de.png" alt="German" class="w-6 h-6 cursor-pointer">
+                <img id="lang-en" src="icons/en.png" alt="English" class="w-6 h-6 cursor-pointer">
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="text-center bg-cover bg-center h-[60vh] relative" style="background-image: url('images/hero-bkgd.jpg');">
+        <div class="bg-gradient-to-b from-black/60 to-transparent h-full flex flex-col justify-center items-center text-white">
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight">Stieregg Rentals</h1>
+            <p class="text-xl md:text-3xl mt-4 lang-en hidden">Your perfect holiday apartment in Grindelwald</p>
+            <p class="text-xl md:text-3xl mt-4 lang-de">Ihre perfekte Ferienwohnung in Grindelwald</p>
+            <a href="https://S005769.officialbookings.com" class="mt-6 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg lang-en hidden">Book Now</a>
+            <a href="https://S005769.officialbookings.com" class="mt-6 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg lang-de">Jetzt buchen</a>
+        </div>
+    </section>
+
+    <!-- Apartments Section -->
+    <section id="apartments" class="p-8">
+        <div class="flex justify-between items-center mb-8">
+            <div class="flex items-center space-x-4 ml-auto">
+                <span class="text-gray-700 lang-en hidden">Show as:</span>
+                <span class="text-gray-700 lang-de">Anzeigen als:</span>
+                <div class="relative group">
+                    <img id="view-grid" src="icons/grid.png" alt="Grid" class="w-8 h-8 cursor-pointer">
+                    <span class="absolute bottom-full mb-1 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition">
+                        <span class="lang-en hidden">Grid</span>
+                        <span class="lang-de">Raster</span>
+                    </span>
+                </div>
+                <div class="relative group">
+                    <img id="view-map" src="icons/map.png" alt="Map" class="w-8 h-8 cursor-pointer">
+                    <span class="absolute bottom-full mb-1 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition">
+                        <span class="lang-en hidden">Map</span>
+                        <span class="lang-de">Karte</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div id="apartments-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Apartments grid content will be rendered here -->
+        </div>
+        <div id="map-container" class="rounded-lg shadow-lg hidden" style="height: 35rem;"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-6 text-center">
+        <p class="lang-en hidden">&copy; 2025 Stieregg Rentals. All rights reserved.</p>
+        <p class="lang-de">&copy; 2025 Stieregg Rentals. Alle Rechte vorbehalten.</p>
+        <div class="mt-4">
+            <a href="#impressum" class="text-blue-400 hover:underline lang-en hidden">Impressum</a> | 
+            <a href="#privacy" class="text-blue-400 hover:underline lang-en hidden">Privacy Policy</a>
+            <a href="#impressum" class="text-blue-400 hover:underline lang-de">Impressum</a> | 
+            <a href="#privacy" class="text-blue-400 hover:underline lang-de">Datenschutz</a>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script type="module">
+        // Apartments data with coordinates
+        const apartments = [
+            {
+                title: "Chalet Stieregg Studio Ost",
+                descriptionEn: "A cozy studio apartment with 1 bedroom, perfect for up to 2 people.",
+                descriptionDe: "Ein gemütliches Studio-Apartment mit 1 Schlafzimmer, ideal für bis zu 2 Personen.",
+                bookingLink: "https://s005769.officialbookings.com/room/TEST_?activeBookingEngine=KBE&propertyCode=S005769&skd-checkin=2025-04-01&skd-checkout=2025-04-08&skd-property-code=S005769",
+                images: ["images/default-image.jpg", "images/default-image.jpg", "images/default-image.jpg"],
+                coords: [46.62741012681669, 8.027309554918785]
+            },
+            {
+                title: "Chalet Stieregg Studio West",
+                descriptionEn: "A cozy studio apartment with 1 bedroom, perfect for up to 2 people.",
+                descriptionDe: "Ein gemütliches Studio-Apartment mit 1 Schlafzimmer, ideal für bis zu 2 Personen.",
+                bookingLink: "https://booking.example.com/studio-west",
+                images: ["images/default-image.jpg", "images/default-image.jpg", "images/default-image.jpg"],
+                coords: [46.62741012585345, 8.02710860371621]
+            },
+            {
+                title: "Chalet Stieregg Apartment Ost",
+                descriptionEn: "A spacious apartment with 2 bedrooms, perfect for up to 4 people.",
+                descriptionDe: "Ein geräumiges Apartment mit 2 Schlafzimmern, ideal für bis zu 4 Personen.",
+                bookingLink: "https://booking.example.com/apartment-ost",
+                images: ["images/default-image.jpg", "images/default-image.jpg", "images/default-image.jpg"],
+                coords: [46.62731155450113, 8.027293607253567]
+            },
+            {
+                title: "Chalet Stieregg Apartment West",
+                descriptionEn: "A modern apartment with 2 bedrooms, perfect for up to 4 people.",
+                descriptionDe: "Ein modernes Apartment mit 2 Schlafzimmern, ideal für bis zu 4 Personen.",
+                bookingLink: "https://booking.example.com/apartment-west",
+                images: ["images/default-image.jpg", "images/default-image.jpg", "images/default-image.jpg"],
+                coords: [46.62731374410197, 8.027111794561225]
+            },
+            {
+                title: "Chalet Alpenblume Apartment Celina",
+                descriptionEn: "A charming apartment with 2 bedrooms, perfect for up to 4 people.",
+                descriptionDe: "Ein charmantes Apartment mit 2 Schlafzimmern, ideal für bis zu 4 Personen.",
+                bookingLink: "https://booking.example.com/apartment-celina",
+                images: ["images/default-image.jpg", "images/default-image.jpg", "images/default-image.jpg"],
+                coords: [46.626921361521575, 8.02746425978436]
+            },
+            {
+                title: "Chalet Walt Apartment Wega",
+                descriptionEn: "A cozy apartment with 2 bedrooms, perfect for up to 4 people.",
+                descriptionDe: "Ein gemütliches Apartment mit 2 Schlafzimmern, ideal für bis zu 4 Personen.",
+                bookingLink: "https://booking.example.com/apartment-wega",
+                images: ["images/default-image.jpg", "images/default-image.jpg", "images/default-image.jpg"],
+                coords: [46.624113753495735, 8.032121787611096]
+            },
+            {
+                title: "Grossenhaus Apartment Valerian",
+                descriptionEn: "A luxurious apartment with 3 bedrooms, perfect for up to 6 people.",
+                descriptionDe: "Ein luxuriöses Apartment mit 3 Schlafzimmern, ideal für bis zu 6 Personen.",
+                bookingLink: "https://booking.example.com/apartment-valerian",
+                images: ["images/default-image.jpg", "images/default-image.jpg", "images/default-image.jpg"],
+                coords: [46.62450437348164, 8.03654315892381]
+            }
+        ];
+
+        console.log(apartments); // Debugging: Ensure the data is loaded correctly
+
+        // Language Switcher
+        const langEnButton = document.getElementById('lang-en');
+        const langDeButton = document.getElementById('lang-de');
+        const langEnElements = document.querySelectorAll('.lang-en');
+        const langDeElements = document.querySelectorAll('.lang-de');
+
+        // Load language preference from localStorage
+        const savedLanguage = localStorage.getItem('language') || 'de';
+        if (savedLanguage === 'en') {
+            switchToEnglish();
+        } else {
+            switchToGerman();
+        }
+
+        function switchToEnglish() {
+            langEnElements.forEach(el => el.classList.remove('hidden'));
+            langDeElements.forEach(el => el.classList.add('hidden'));
+            localStorage.setItem('language', 'en'); // Save preference
+            updatePopupLanguage('en');
+            updateApartmentsLanguage('en');
+        }
+
+        function switchToGerman() {
+            langEnElements.forEach(el => el.classList.add('hidden'));
+            langDeElements.forEach(el => el.classList.remove('hidden'));
+            localStorage.setItem('language', 'de'); // Save preference
+            updatePopupLanguage('de');
+            updateApartmentsLanguage('de');
+        }
+
+        langEnButton.addEventListener('click', () => {
+            switchToEnglish();
+        });
+
+        langDeButton.addEventListener('click', () => {
+            switchToGerman();
+        });
+
+        // Update apartments section on language switch
+        function updateApartmentsLanguage(language) {
+            const apartmentsContainer = document.querySelector("#apartments .grid");
+            apartmentsContainer.querySelectorAll(".lang-en, .lang-de").forEach(el => {
+                if (el.classList.contains(`lang-${language}`)) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+        }
+
+        // Leaflet Map
+        let mapInitialized = false;
+        const map = L.map('map-container', { zoomControl: false });
+
+        function initializeMap() {
+            if (!mapInitialized) {
+                map.setView([46.6262, 8.0309], 14); // Adjusted coordinates and zoom factor
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                // Create markers and store them
+                const markers = pins.map(pin => {
+                    const marker = L.marker(pin.coords).addTo(map).bindPopup(pin.de);
+                    return { marker, content: pin };
+                });
+
+                // Store markers globally for language switching
+                window.markers = markers;
+
+                // Initialize Swiper.js for popups
+                map.on('popupopen', () => {
+                    new Swiper('.swiper', {
+                        loop: true,
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true,
+                        },
+                    });
+                });
+
+                mapInitialized = true;
+            }
+        }
+
+        // Function to generate apartment/popup HTML
+        function generateApartmentHTML(title, descriptionEn, descriptionDe, bookingLink, images, isPopup = false) {
+            const shadowClass = isPopup ? '' : 'shadow-lg';
+            return {
+                en: `
+                    <div class="bg-white rounded-lg ${shadowClass} overflow-hidden">
+                        <h3 class="text-xl font-bold p-4">${title}</h3>
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                ${images.map(img => `<div class="swiper-slide"><img src="${img}" alt="Image" class="w-full h-48 object-cover"></div>`).join('')}
+                            </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-gray-700">${descriptionEn}</p>
+                            <button onclick="window.open('${bookingLink}', '_blank')" 
+                                    class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                `,
+                de: `
+                    <div class="bg-white rounded-lg ${shadowClass} overflow-hidden">
+                        <h3 class="text-xl font-bold p-4">${title}</h3>
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                ${images.map(img => `<div class="swiper-slide"><img src="${img}" alt="Image" class="w-full h-48 object-cover"></div>`).join('')}
+                            </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-gray-700">${descriptionDe}</p>
+                            <button onclick="window.open('${bookingLink}', '_blank')" 
+                                    class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                Jetzt buchen
+                            </button>
+                        </div>
+                    </div>
+                `
+            };
+        }
+
+        // Render apartments section
+        const apartmentsContainer = document.querySelector("#apartments .grid");
+        apartments.forEach(apartment => {
+            const html = generateApartmentHTML(
+                apartment.title,
+                apartment.descriptionEn,
+                apartment.descriptionDe,
+                apartment.bookingLink,
+                apartment.images
+            );
+            apartmentsContainer.innerHTML += `
+                <div class="lang-en hidden">${html.en}</div>
+                <div class="lang-de">${html.de}</div>
+            `;
+        });
+
+        // Pins array for map
+        const pins = apartments.map(apartment => ({
+            coords: apartment.coords,
+            ...generateApartmentHTML(
+                apartment.title,
+                apartment.descriptionEn,
+                apartment.descriptionDe,
+                apartment.bookingLink,
+                apartment.images,
+                true // Pass true to indicate this is for a pin popup
+            )
+        }));
+
+        // Create markers and store them
+        const markers = pins.map(pin => {
+            const marker = L.marker(pin.coords).addTo(map).bindPopup(pin.de);
+            return { marker, content: pin };
+        });
+
+        // Initialize Swiper.js for popups
+        map.on('popupopen', () => {
+            new Swiper('.swiper', {
+                loop: true,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            });
+        });
+
+        // Function to update popup content based on language
+        function updatePopupLanguage(language) {
+            if (window.markers) {
+                window.markers.forEach(({ marker, content }) => {
+                    marker.getPopup().setContent(content[language]);
+                });
+            }
+        }
+
+        // Initialize popups with the default language
+        updatePopupLanguage('de');
+
+        // View switcher icons
+        const viewGridIcon = document.getElementById('view-grid');
+        const viewMapIcon = document.getElementById('view-map');
+        const apartmentsGrid = document.getElementById('apartments-grid');
+        const mapContainer = document.getElementById('map-container');
+
+        // Default to grid view
+        viewGridIcon.addEventListener('click', () => {
+            apartmentsGrid.classList.remove('hidden');
+            mapContainer.classList.add('hidden');
+        });
+
+        viewMapIcon.addEventListener('click', () => {
+            apartmentsGrid.classList.add('hidden');
+            mapContainer.classList.remove('hidden');
+            initializeMap(); // Ensure the map is initialized when switching to map view
+        });
+
+        // Initialize Swiper.js for popups and ensure proper reinitialization
+        function initializeSwiper() {
+            new Swiper('.swiper', {
+                loop: true,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                lazy: true, // Enable lazy loading for images
+            });
+        }
+
+        // Ensure Swiper is initialized when popups are opened
+        map.on('popupopen', () => {
+            setTimeout(() => {
+                initializeSwiper(); // Reinitialize Swiper to fix button issues
+            }, 0);
+        });
+
+        // Ensure Swiper is initialized for grid view
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeSwiper();
+        });
+    </script>
+</body>
+</html>

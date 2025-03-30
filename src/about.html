@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Stieregg Rentals</title>
+    <link rel="icon" href="icons/logo.png" type="image/png">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="font-sans text-gray-800">
+    <header class="bg-gray-800 text-white p-4 sticky top-0 z-50">
+        <nav class="flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="index.html">
+                    <img src="icons/logo.png" alt="Stieregg Rentals Logo" class="w-10 h-10">
+                </a>
+                <a href="index.html" class="hover:underline">Home</a>
+                <a href="about.html" class="hover:underline lang-en hidden">About Us</a>
+                <a href="about.html" class="hover:underline lang-de">Über uns</a>
+            </div>
+            <div class="flex space-x-4">
+                <img id="lang-de" src="icons/de.png" alt="German" class="w-6 h-6 cursor-pointer">
+                <img id="lang-en" src="icons/en.png" alt="English" class="w-6 h-6 cursor-pointer">
+            </div>
+        </nav>
+    </header>
+
+    <!-- About Us Section -->
+    <section id="about" class="p-8 bg-gray-100">
+        <h2 class="text-3xl font-bold mb-8 lang-en hidden">About Us</h2>
+        <h2 class="text-3xl font-bold mb-8 lang-de">Über uns</h2>
+        <p class="text-lg text-gray-700 lang-en hidden">
+            We are a family-run business offering cozy holiday apartments in the heart of Grindelwald, Switzerland. 
+            Founded in 2025, we bring 27 years of experience in apartment renting to ensure your stay is perfect.
+        </p>
+        <p class="text-lg text-gray-700 lang-de">
+            Wir sind ein familiengeführtes Unternehmen, das gemütliche Ferienwohnungen im Herzen von Grindelwald, Schweiz, anbietet. 
+            Gegründet im Jahr 2025, bringen wir 27 Jahre Erfahrung in der Vermietung von Ferienwohnungen mit, um Ihren Aufenthalt perfekt zu gestalten.
+        </p>
+        <p class="text-lg text-gray-700 mt-4 lang-en hidden">
+            Our family has been dedicated to providing exceptional service and creating memorable experiences for our guests. 
+            Operating out of Grindelwald, we take pride in offering a personal touch to every booking.
+        </p>
+        <p class="text-lg text-gray-700 mt-4 lang-de">
+            Unsere Familie ist bestrebt, außergewöhnlichen Service zu bieten und unvergessliche Erlebnisse für unsere Gäste zu schaffen. 
+            Mit Sitz in Grindelwald sind wir stolz darauf, jeder Buchung eine persönliche Note zu verleihen.
+        </p>
+        <p class="text-lg text-gray-700 mt-4 lang-en hidden">
+            Our apartments are designed to provide comfort and convenience, whether you're visiting for a relaxing getaway or an adventurous holiday. 
+            We strive to make every guest feel at home and ensure their stay is unforgettable.
+        </p>
+        <p class="text-lg text-gray-700 mt-4 lang-de">
+            Unsere Apartments sind so gestaltet, dass sie Komfort und Bequemlichkeit bieten, egal ob Sie für einen erholsamen Urlaub oder ein Abenteuer zu uns kommen. 
+            Wir bemühen uns, dass sich jeder Gast wie zu Hause fühlt und sein Aufenthalt unvergesslich wird.
+        </p>
+    </section>
+
+    <!-- For Property Owners Section -->
+    <section id="owners" class="p-8">
+        <h2 class="text-3xl font-bold mb-8 lang-en hidden">For Property Owners</h2>
+        <h2 class="text-3xl font-bold mb-8 lang-de">Für Eigentümer</h2>
+        <p class="text-gray-700 lang-en hidden">
+            We offer property management services for holiday apartments. Our company provides full service, 
+            including guest communication, check-in/check-out, and cleaning. Your property will be listed on 
+            platforms like Airbnb, Expedia, and more to maximize visibility and bookings. 
+            If you're interested, <a href="mailto:info@stieregg.ch" class="text-blue-500 hover:underline">contact us</a> to learn more.
+        </p>
+        <p class="text-gray-700 lang-de">
+            Wir bieten Verwaltungsdienste für Ferienwohnungen an. Unser Unternehmen übernimmt den kompletten Service, 
+            einschließlich Gästekommunikation, Check-in/Check-out und Reinigung. Ihre Immobilie wird auf Plattformen 
+            wie Airbnb, Expedia und weiteren gelistet, um maximale Sichtbarkeit und Buchungen zu erzielen. 
+            Wenn Sie interessiert sind, <a href="mailto:info@stieregg.ch" class="text-blue-500 hover:underline">kontaktieren Sie uns</a>, um mehr zu erfahren.
+        </p>
+        <p class="text-gray-700 mt-4 lang-en hidden">
+            By partnering with us, property owners can enjoy a hassle-free experience while maximizing their rental income. 
+            We handle everything from marketing to guest reviews, ensuring your property is well-maintained and highly rated.
+        </p>
+        <p class="text-gray-700 mt-4 lang-de">
+            Durch eine Partnerschaft mit uns können Eigentümer eine stressfreie Erfahrung genießen und gleichzeitig ihre Mieteinnahmen maximieren. 
+            Wir kümmern uns um alles, von der Vermarktung bis zu Gästebewertungen, und sorgen dafür, dass Ihre Immobilie gut gepflegt und hoch bewertet wird.
+        </p>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="p-8 bg-gray-100">
+        <h2 class="text-3xl font-bold mb-8 lang-en hidden">Contact Us</h2>
+        <h2 class="text-3xl font-bold mb-8 lang-de">Kontaktieren Sie uns</h2>
+        <p class="lang-en hidden">Email: <a href="mailto:info@stieregg.ch" class="text-blue-500 hover:underline">info@stieregg.ch</a></p>
+        <p class="lang-de">E-Mail: <a href="mailto:info@stieregg.ch" class="text-blue-500 hover:underline">info@stieregg.ch</a></p>
+        <p class="lang-en hidden">Phone: +41 79 123 45 67</p>
+        <p class="lang-de">Telefon: +41 79 123 45 67</p>
+        <p class="lang-en hidden">Location: Grindelwald, Switzerland</p>
+        <p class="lang-de">Standort: Grindelwald, Schweiz</p>
+    </section>
+
+    <footer class="bg-gray-800 text-white p-6 text-center">
+        <p class="lang-en hidden">&copy; 2025 Stieregg Rentals. All rights reserved.</p>
+        <p class="lang-de">&copy; 2025 Stieregg Rentals. Alle Rechte vorbehalten.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        const langEnButton = document.getElementById('lang-en');
+        const langDeButton = document.getElementById('lang-de');
+        const langEnElements = document.querySelectorAll('.lang-en');
+        const langDeElements = document.querySelectorAll('.lang-de');
+
+        // Load language preference from localStorage
+        const savedLanguage = localStorage.getItem('language') || 'de';
+        if (savedLanguage === 'en') {
+            switchToEnglish();
+        } else {
+            switchToGerman();
+        }
+
+        function switchToEnglish() {
+            langEnElements.forEach(el => el.classList.remove('hidden'));
+            langDeElements.forEach(el => el.classList.add('hidden'));
+            localStorage.setItem('language', 'en'); // Save preference
+        }
+
+        function switchToGerman() {
+            langEnElements.forEach(el => el.classList.add('hidden'));
+            langDeElements.forEach(el => el.classList.remove('hidden'));
+            localStorage.setItem('language', 'de'); // Save preference
+        }
+
+        langEnButton.addEventListener('click', () => {
+            switchToEnglish();
+        });
+
+        langDeButton.addEventListener('click', () => {
+            switchToGerman();
+        });
+    </script>
+</body>
+</html>
