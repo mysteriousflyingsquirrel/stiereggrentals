@@ -408,7 +408,8 @@
                     el: '.swiper-pagination',
                     clickable: true,
                 },
-                lazy: true, // Enable lazy loading for images
+                slidesPerView: 1, // Ensure only one slide is visible at a time
+                spaceBetween: 10, // Add spacing between slides
             });
         }
 
@@ -421,7 +422,7 @@
 
         // Ensure Swiper is initialized for grid view
         document.addEventListener('DOMContentLoaded', () => {
-            initializeSwiper();
+            initializeSwiper(); // Initialize Swiper on page load
         });
     </script>
 </body>
