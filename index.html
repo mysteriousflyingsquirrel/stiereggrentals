@@ -333,8 +333,8 @@
         // Function to generate apartment/popup HTML
         function generateApartmentHTML(title, descriptionEn, descriptionDe, bookingLink, images, isPopup = false) {
             const shadowClass = isPopup ? '' : 'shadow-lg';
-            const paddingClass = isPopup ? 'p-2' : 'p-4';
-            const popupStyle = isPopup ? 'style="max-width: 90%; margin: auto;"' : '';
+            const paddingClass = isPopup ? 'p-0' : 'p-4';
+            const popupStyle = isPopup ? 'style="max-width: 250px; margin: auto;"' : ''; // Set max-width for popups
             return {
                 en: `
                     <div class="bg-white rounded-lg ${shadowClass} overflow-hidden" ${popupStyle}>
