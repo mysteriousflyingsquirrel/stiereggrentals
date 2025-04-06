@@ -121,43 +121,20 @@
         // Apartments data with coordinates
         const apartments = [
             {
-                title: "Chalet Stieregg Studio Ost",
-                descriptionEn: "A cozy studio apartment with 1 bedroom, perfect for up to 2 people.",
-                descriptionDe: "Ein gemütliches Studio-Apartment mit 1 Schlafzimmer, ideal für bis zu 2 Personen.",
-                bookingLink: "https://s005769.officialbookings.com/room/TEST_?activeBookingEngine=KBE&propertyCode=S005769&skd-checkin=2025-04-01&skd-checkout=2025-04-08&skd-property-code=S005769",
-                images: ["images/default-image.jpg", "images/default-image.jpg", "images/default-image.jpg"],
-                coords: [46.62741012681669, 8.027309554918785]
-            },
-            {
-                title: "Chalet Stieregg Studio West",
-                descriptionEn: "A cozy studio apartment with 1 bedroom, perfect for up to 2 people.",
-                descriptionDe: "Ein gemütliches Studio-Apartment mit 1 Schlafzimmer, ideal für bis zu 2 Personen.",
-                bookingLink: "https://booking.example.com/studio-west",
-                images: ["images/default-image.jpg", "images/default-image.jpg", "images/default-image.jpg"],
-                coords: [46.62741012585345, 8.02710860371621]
-            },
-            {
-                title: "Chalet Stieregg Apartment Ost",
-                descriptionEn: "A spacious apartment with 2 bedrooms, perfect for up to 4 people.",
-                descriptionDe: "Ein geräumiges Apartment mit 2 Schlafzimmern, ideal für bis zu 4 Personen.",
-                bookingLink: "https://booking.example.com/apartment-ost",
-                images: ["images/default-image.jpg", "images/default-image.jpg", "images/default-image.jpg"],
-                coords: [46.62731155450113, 8.027293607253567]
-            },
-            {
-                title: "Chalet Stieregg Apartment West",
-                descriptionEn: "A modern apartment with 2 bedrooms, perfect for up to 4 people.",
-                descriptionDe: "Ein modernes Apartment mit 2 Schlafzimmern, ideal für bis zu 4 Personen.",
-                bookingLink: "https://booking.example.com/apartment-west",
-                images: ["images/default-image.jpg", "images/default-image.jpg", "images/default-image.jpg"],
-                coords: [46.62731374410197, 8.027111794561225]
-            },
-            {
                 title: "Chalet Alpenblume Apartment Celina",
                 descriptionEn: "A charming apartment with 2 bedrooms, perfect for up to 4 people.",
                 descriptionDe: "Ein charmantes Apartment mit 2 Schlafzimmern, ideal für bis zu 4 Personen.",
                 bookingLink: "https://booking.example.com/apartment-celina",
-                images: ["images/default-image.jpg", "images/default-image.jpg", "images/default-image.jpg"],
+                images: [
+                "images/alpenblume/celina/Wohnzimmer.jpg", 
+                "images/alpenblume/celina/Schlafzimmer1.jpg",
+                "images/alpenblume/celina/Badezimmer1.jpg",
+                "images/alpenblume/celina/Badezimmer2.jpg",
+                "images/alpenblume/celina/Küche.jpg",
+                "images/alpenblume/celina/Aussicht.jpg",
+                "images/alpenblume/celina/Sommer.jpg",
+                "images/alpenblume/celina/Winter.jpg"
+                ],
                 coords: [46.626921361521575, 8.02746425978436]
             },
             {
@@ -165,7 +142,16 @@
                 descriptionEn: "A cozy apartment with 2 bedrooms, perfect for up to 4 people.",
                 descriptionDe: "Ein gemütliches Apartment mit 2 Schlafzimmern, ideal für bis zu 4 Personen.",
                 bookingLink: "https://booking.example.com/apartment-wega",
-                images: ["images/default-image.jpg", "images/default-image.jpg", "images/default-image.jpg"],
+                images: [
+                "images/chaletwalt/wega/Wohnzimmer.jpg", 
+                "images/chaletwalt/wega/Schlafzimmer1.jpg",
+                "images/chaletwalt/wega/Schlafzimmer2.jpg",
+                "images/chaletwalt/wega/Badezimmer.jpg",
+                "images/chaletwalt/wega/Dusche.jpg",
+                "images/chaletwalt/wega/Küche.jpg",
+                "images/chaletwalt/wega/Aussicht.jpg",
+                "images/chaletwalt/wega/Sommer.jpg"
+                ],
                 coords: [46.624113753495735, 8.032121787611096]
             },
             {
@@ -173,8 +159,83 @@
                 descriptionEn: "A luxurious apartment with 3 bedrooms, perfect for up to 6 people.",
                 descriptionDe: "Ein luxuriöses Apartment mit 3 Schlafzimmern, ideal für bis zu 6 Personen.",
                 bookingLink: "https://booking.example.com/apartment-valerian",
-                images: ["images/default-image.jpg", "images/default-image.jpg", "images/default-image.jpg"],
+                images: [
+                "images/grossenhaus/valerian/Wohnzimmer.jpg", 
+                "images/grossenhaus/valerian/Esstisch.jpg", 
+                "images/grossenhaus/valerian/Schlafzimmer1.jpg", 
+                "images/grossenhaus/valerian/Schlafzimmer2.jpg", 
+                "images/grossenhaus/valerian/Badezimmer1.jpg", 
+                "images/grossenhaus/valerian/Badezimmer2.jpg", 
+                "images/grossenhaus/valerian/Küche.jpg", 
+                "images/grossenhaus/valerian/Aussicht.jpeg" 
+                ],
                 coords: [46.62450437348164, 8.03654315892381]
+            },
+            {
+                title: "Chalet Stieregg Apartment Ost",
+                descriptionEn: "A spacious apartment with 2 bedrooms, perfect for up to 4 people.",
+                descriptionDe: "Ein geräumiges Apartment mit 2 Schlafzimmern, ideal für bis zu 4 Personen.",
+                bookingLink: "https://booking.example.com/apartment-ost",
+                images: [
+                "images/chaletstieregg/wohnungost/Schlafzimmer.jpg", 
+                "images/chaletstieregg/wohnungost/Wohnzimmer.jpg", 
+                "images/chaletstieregg/wohnungost/Badezimmer.jpg", 
+                "images/chaletstieregg/wohnungost/Küche.jpg",
+                "images/chaletstieregg/wohnungost/Esstisch.jpg", 
+                "images/chaletstieregg/wohnungost/Terrasse.jpg", 
+                "images/chaletstieregg/wohnungost/Aussicht.jpg", 
+                "images/chaletstieregg/wohnungost/Sommer.jpg", 
+                "images/chaletstieregg/wohnungost/Winter.jpg", 
+                ],
+                coords: [46.62731155450113, 8.027293607253567]
+            },
+            {
+                title: "Chalet Stieregg Apartment West",
+                descriptionEn: "A modern apartment with 2 bedrooms, perfect for up to 4 people.",
+                descriptionDe: "Ein modernes Apartment mit 2 Schlafzimmern, ideal für bis zu 4 Personen.",
+                bookingLink: "https://booking.example.com/apartment-west",
+                images: [
+                "images/chaletstieregg/wohnungwest/Esstisch.jpg", 
+                "images/chaletstieregg/wohnungwest/Wohnzimmer.jpg", 
+                "images/chaletstieregg/wohnungwest/Schlafzimmer.jpg", 
+                "images/chaletstieregg/wohnungwest/Badezimmer.jpg", 
+                "images/chaletstieregg/wohnungwest/Küche.jpg",
+                "images/chaletstieregg/wohnungwest/Terrasse.jpg", 
+                "images/chaletstieregg/wohnungwest/Aussicht.JPG", 
+                "images/chaletstieregg/wohnungwest/Sommer.jpg", 
+                "images/chaletstieregg/wohnungwest/Winter.jpg" 
+                ],
+                coords: [46.62731374410197, 8.027111794561225]
+            },
+            {
+                title: "Chalet Stieregg Studio Ost",
+                descriptionEn: "A cozy studio apartment with 1 bedroom, perfect for up to 2 people.",
+                descriptionDe: "Ein gemütliches Studio-Apartment mit 1 Schlafzimmer, ideal für bis zu 2 Personen.",
+                bookingLink: "https://s005769.officialbookings.com/room/TEST_?activeBookingEngine=KBE&propertyCode=S005769&skd-checkin=2025-04-01&skd-checkout=2025-04-08&skd-property-code=S005769",
+                images: [
+                "images/chaletstieregg/studioost/Wohnzimmer.jpg",
+                "images/chaletstieregg/studioost/Bett.jpg",
+                "images/chaletstieregg/studioost/Küche.jpg",
+                "images/chaletstieregg/studioost/Esstisch.jpg",
+                "images/chaletstieregg/studioost/Badezimmer.jpg",
+                "images/chaletstieregg/studioost/Aussicht.jpg",
+                ],
+                coords: [46.62741012681669, 8.027309554918785]
+            },
+            {
+                title: "Chalet Stieregg Studio West",
+                descriptionEn: "A cozy studio apartment with 1 bedroom, perfect for up to 2 people.",
+                descriptionDe: "Ein gemütliches Studio-Apartment mit 1 Schlafzimmer, ideal für bis zu 2 Personen.",
+                bookingLink: "https://booking.example.com/studio-west",
+                images: [
+                "images/chaletstieregg/studiowest/Wohnzimmer.jpg",
+                "images/chaletstieregg/studiowest/Bett.jpg",
+                "images/chaletstieregg/studiowest/Kochnische.jpg",
+                "images/chaletstieregg/studiowest/Esstisch.jpg",
+                "images/chaletstieregg/studiowest/Badezimmer.JPG",
+                "images/chaletstieregg/studiowest/Aussicht.jpg",
+                ],
+                coords: [46.62741012585345, 8.02710860371621]
             }
         ];
 
@@ -272,19 +333,21 @@
         // Function to generate apartment/popup HTML
         function generateApartmentHTML(title, descriptionEn, descriptionDe, bookingLink, images, isPopup = false) {
             const shadowClass = isPopup ? '' : 'shadow-lg';
+            const paddingClass = isPopup ? 'p-2' : 'p-4';
+            const popupStyle = isPopup ? 'style="max-width: 90%; margin: auto;"' : '';
             return {
                 en: `
-                    <div class="bg-white rounded-lg ${shadowClass} overflow-hidden">
-                        <h3 class="text-xl font-bold p-4">${title}</h3>
+                    <div class="bg-white rounded-lg ${shadowClass} overflow-hidden" ${popupStyle}>
+                        <h3 class="text-xl font-bold ${paddingClass}">${title}</h3>
                         <div class="swiper">
                             <div class="swiper-wrapper">
-                                ${images.map(img => `<div class="swiper-slide"><img src="${img}" alt="Image" class="w-full h-48 object-cover"></div>`).join('')}
+                                ${images.map(img => `<div class="swiper-slide"><img src="${img}" alt="Image" class="w-full h-64 object-cover"></div>`).join('')}
                             </div>
                             <div class="swiper-button-next"></div>
                             <div class="swiper-button-prev"></div>
                             <div class="swiper-pagination"></div>
                         </div>
-                        <div class="p-4">
+                        <div class="${paddingClass}">
                             <p class="text-gray-700">${descriptionEn}</p>
                             <button onclick="window.open('${bookingLink}', '_blank')" 
                                     class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
@@ -294,17 +357,17 @@
                     </div>
                 `,
                 de: `
-                    <div class="bg-white rounded-lg ${shadowClass} overflow-hidden">
-                        <h3 class="text-xl font-bold p-4">${title}</h3>
+                    <div class="bg-white rounded-lg ${shadowClass} overflow-hidden" ${popupStyle}>
+                        <h3 class="text-xl font-bold ${paddingClass}">${title}</h3>
                         <div class="swiper">
                             <div class="swiper-wrapper">
-                                ${images.map(img => `<div class="swiper-slide"><img src="${img}" alt="Image" class="w-full h-48 object-cover"></div>`).join('')}
+                                ${images.map(img => `<div class="swiper-slide"><img src="${img}" alt="Image" class="w-full h-64 object-cover"></div>`).join('')}
                             </div>
                             <div class="swiper-button-next"></div>
                             <div class="swiper-button-prev"></div>
                             <div class="swiper-pagination"></div>
                         </div>
-                        <div class="p-4">
+                        <div class="${paddingClass}">
                             <p class="text-gray-700">${descriptionDe}</p>
                             <button onclick="window.open('${bookingLink}', '_blank')" 
                                     class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
