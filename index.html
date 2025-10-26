@@ -656,8 +656,8 @@
                 <div class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full relative">
                     <button onclick="document.getElementById('hotelcalendar-modal').remove()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-900 text-xl">&times;</button>
                     <h2 class="text-xl font-bold mb-4">${apartmentTitle}</h2>
-                    <input id="hotelcalendar-input" class="w-full border px-4 py-2 rounded mb-4" placeholder="Select dates" readonly />
                     <input id="hotelcalendar-name" class="w-full border px-4 py-2 rounded mb-4" placeholder="Name" />
+                    <input id="hotelcalendar-input" class="w-full border px-4 py-2 rounded mb-4" placeholder="Select dates" readonly />
                     <button id="hotelcalendar-submit" class="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 mb-4">Submit via EMail</button>
                     <div id="hotelcalendar-picker"></div>
                 </div>
@@ -723,7 +723,7 @@
                 let start = picker && picker.getStartDate() ? picker.getStartDate().format('DD/MM/YYYY') : '';
                 let end = picker && picker.getEndDate() ? picker.getEndDate().format('DD/MM/YYYY') : '';
                 const subject = encodeURIComponent(`Booking request: ${apartmentTitle}`);
-                const body = encodeURIComponent(`Name: ${name}\nApartment: ${apartmentTitle}\nCheck-in: ${start}\nCheck-out: ${end}`);
+                const body = encodeURIComponent(`Apartment: ${apartmentTitle}\nName: ${name}\nCheck-in: ${start}\nCheck-out: ${end}`);
                 window.location.href = `mailto:info@stieregg.ch?subject=${subject}&body=${body}`;
             };
         }
