@@ -277,7 +277,7 @@ function generateApartmentHTML(apartment, language, isPopup = false) {
 
     return `
         <div class="${cardClasses}" ${popupStyle}>
-            <h3 class="text-xl font-bold ${paddingClass}">${titleHTML}</h3>
+            <h3 class="text-xl font-bold ${paddingClass}" data-full-title="${apartment.title}">${titleHTML}</h3>
             <div class="swiper flex-none w-full ${sliderHeightClass} overflow-hidden">
                 <div class="swiper-wrapper h-full">
                     ${imageSlides}
