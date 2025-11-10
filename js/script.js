@@ -230,22 +230,23 @@ function generateApartmentHTML(apartment, language, isPopup = false) {
     const shadowClass = isPopup ? '' : 'shadow-lg';
     const paddingClass = isPopup ? 'p-0' : 'p-4';
     const popupStyle = isPopup ? 'style="max-width: 250px; margin: auto;"' : '';
-    const imageHeight = isPopup ? 'h-32 md:h-48' : 'h-48 md:h-72';
     const description = language === 'en' ? apartment.descriptionEn : apartment.descriptionDe;
     const priceText = `${translations[language].pricePrefix} ${apartment.price}`;
     const bookingButtonText = translations[language].bookingButton;
     
-    // Split title into two lines
     const titleParts = splitTitle(apartment.title);
     const titleHTML = titleParts.line2 
         ? `<span class="block">${titleParts.line1}</span><span class="block">${titleParts.line2}</span>`
         : titleParts.line1;
 
+    const sliderHeightClass = isPopup ? 'h-36 md:h-48' : 'h-48 md:h-64';
     const imageSlides = apartment.images.map(img => 
-        `<div class="swiper-slide"><img src="${img}" alt="Image" class="w-full ${imageHeight} object-cover"></div>`
+        `<div class="swiper-slide h-full">
+            <img src="${img}" alt="Image" class="h-full w-full object-cover">
+        </div>`
     ).join('');
 
-    const bookingButtons = `
+    const buttonsHTML = `
         <button type="button" class="w-full max-w-xs px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 easepick-trigger">
             ${bookingButtonText}
         </button>
@@ -263,23 +264,31 @@ function generateApartmentHTML(apartment, language, isPopup = false) {
         ` : ''}
     `;
 
+    const cardBaseClasses = `bg-white rounded-lg overflow-hidden ${shadowClass}`;
+    const cardClasses = isPopup ? cardBaseClasses : `${cardBaseClasses} flex flex-col h-full`;
+    const contentWrapperClass = `${paddingClass} flex flex-col gap-4 ${isPopup ? '' : 'flex-1'}`;
+    const descriptionHTML = !isPopup ? `<p class="text-gray-700 ${isPopup ? '' : 'flex-1'}">${description}</p>` : '';
+    const bottomSection = `
+        <div class="flex flex-col items-end ${isPopup ? 'space-y-2' : 'space-y-4'} ${isPopup ? '' : 'mt-auto'}">
+            <p class="font-bold text-gray-700 text-right">${priceText}</p>
+            ${buttonsHTML}
+        </div>
+    `;
+
     return `
-        <div class="bg-white rounded-lg ${shadowClass} overflow-hidden" ${popupStyle}>
-            <h3 class="text-xl font-bold ${paddingClass}" data-full-title="${apartment.title}">${titleHTML}</h3>
-            <div class="swiper">
-                <div class="swiper-wrapper">
+        <div class="${cardClasses}" ${popupStyle}>
+            <h3 class="text-xl font-bold ${paddingClass}">${titleHTML}</h3>
+            <div class="swiper flex-none w-full ${sliderHeightClass} overflow-hidden">
+                <div class="swiper-wrapper h-full">
                     ${imageSlides}
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-pagination"></div>
             </div>
-            <div class="${paddingClass}">
-                ${!isPopup ? `<p class="text-gray-700">${description}</p>` : ''}
-                <p class="font-bold text-gray-700 mt-2 text-right">${priceText}</p>
-                <div class="flex flex-col items-end space-y-4 mt-4">
-                    ${bookingButtons}
-                </div>
+            <div class="${contentWrapperClass}">
+                ${descriptionHTML}
+                ${bottomSection}
             </div>
         </div>
     `;
@@ -291,12 +300,15 @@ function renderApartments() {
         const htmlEn = generateApartmentHTML(apartment, 'en', false);
         const htmlDe = generateApartmentHTML(apartment, 'de', false);
         apartmentsContainer.innerHTML += `
-            <div class="lang-en hidden">${htmlEn}</div>
-            <div class="lang-de">${htmlDe}</div>
+            <div class="lang-en hidden h-full">${htmlEn}</div>
+            <div class="lang-de h-full">${htmlDe}</div>
         `;
     });
     // Initialize Swiper for grid view after rendering
     setTimeout(() => initializeSwiper(), 0);
+    // Ensure grid view is shown by default
+    apartmentsGrid.classList.remove('hidden');
+    mapContainer.classList.add('hidden');
 }
 
 // Language switching
