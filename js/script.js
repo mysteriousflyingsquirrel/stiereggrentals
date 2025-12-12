@@ -246,6 +246,10 @@ function generateApartmentHTML(apartment, language, isPopup = false) {
         </div>`
     ).join('');
 
+    const calendarIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>`;
+    
     const buttonsHTML = `
         <button type="button" class="w-full max-w-xs px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 easepick-trigger">
             ${bookingButtonText}
@@ -270,7 +274,12 @@ function generateApartmentHTML(apartment, language, isPopup = false) {
     const descriptionHTML = !isPopup ? `<p class="text-gray-700 ${isPopup ? '' : 'flex-1'}">${description}</p>` : '';
     const bottomSection = `
         <div class="flex flex-col items-end ${isPopup ? 'space-y-2' : 'space-y-4'} ${isPopup ? '' : 'mt-auto'}">
-            <p class="font-bold text-gray-700 text-right">${priceText}</p>
+            <div class="flex items-center gap-2">
+                <p class="font-bold text-gray-700 text-right">${priceText}</p>
+                <button type="button" class="p-2 bg-gray-600 text-white rounded hover:bg-gray-700 easepick-trigger calendar-view-button">
+                    ${calendarIconSVG}
+                </button>
+            </div>
             ${buttonsHTML}
         </div>
     `;
@@ -544,6 +553,154 @@ function openDatePicker(apartmentTitle) {
     loadEasepickScript();
 }
 
+// Open calendar view (readonly dropdown)
+function openCalendarView(apartmentTitle, buttonElement) {
+    // Close any existing calendar dropdown
+    const existingInput = document.getElementById('calendar-view-input');
+    if (existingInput) {
+        const existingPicker = existingInput.easepick;
+        if (existingPicker) {
+            existingPicker.hide();
+        }
+        existingInput.remove();
+    }
+
+    const apartment = apartments.find(a => a.title === apartmentTitle);
+    if (!apartment) return;
+
+    // Create a hidden input element positioned near the button
+    const input = document.createElement('input');
+    input.id = 'calendar-view-input';
+    input.type = 'text';
+    input.readOnly = true;
+    input.style.position = 'absolute';
+    input.style.opacity = '0';
+    input.style.pointerEvents = 'none';
+    
+    // Position the input relative to the button
+    const buttonRect = buttonElement.getBoundingClientRect();
+    input.style.top = `${buttonRect.bottom + window.scrollY}px`;
+    input.style.left = `${buttonRect.left + window.scrollX}px`;
+    input.style.width = '1px';
+    input.style.height = '1px';
+    
+    document.body.appendChild(input);
+
+    function loadEasepickScript() {
+        if (!window.easepick) {
+            const script = document.createElement('script');
+            script.src = "https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.umd.js";
+            script.onload = initializeCalendarView;
+            document.body.appendChild(script);
+        } else {
+            initializeCalendarView();
+        }
+    }
+
+    async function initializeCalendarView() {
+        const availableRanges = await loadIcalRanges(apartment.ical || "");
+
+        const picker = new easepick.create({
+            element: document.getElementById('calendar-view-input'),
+            css: ["https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css"],
+            plugins: ['LockPlugin'],
+            format: 'DD/MM/YYYY',
+            zIndex: 9999,
+            readonly: true,
+            autoApply: true,
+            LockPlugin: {
+                minDays: 1,
+                inseparable: false,
+                filter(date) {
+                    if (!availableRanges.length) return true;
+                    const d = date.format('YYYY-MM-DD');
+                    for (const [start, end] of availableRanges) {
+                        if (d >= start && d < end) return true;
+                    }
+                    return false;
+                }
+            },
+        });
+
+        // Make calendar completely readonly - prevent all date selection
+        picker.onClickCalendarDay = function() {
+            // Do nothing - prevent date selection
+            return false;
+        };
+
+        // Hide Cancel/Apply buttons and disable date selection via CSS
+        setTimeout(() => {
+            const style = document.createElement('style');
+            style.textContent = `
+                .easepick-wrapper footer {
+                    display: none !important;
+                }
+                .easepick-wrapper .day {
+                    pointer-events: none !important;
+                    cursor: default !important;
+                }
+                .easepick-wrapper .previous-button,
+                .easepick-wrapper .next-button {
+                    pointer-events: auto !important;
+                    cursor: pointer !important;
+                }
+            `;
+            picker.ui.shadowRoot.appendChild(style);
+        }, 100);
+
+        // Show the calendar immediately as a dropdown
+        setTimeout(() => {
+            picker.show();
+            
+            // Close dropdown when clicking outside (wait for calendar to render)
+            setTimeout(() => {
+                const closeOnOutsideClick = (e) => {
+                    // Find the easepick calendar container - try multiple selectors
+                    let easepickContainer = document.querySelector('.easepick-wrapper') || 
+                                          document.querySelector('.easepick-calendar');
+                    
+                    // If not found, try to find any element with easepick in class name
+                    if (!easepickContainer) {
+                        const allElements = document.querySelectorAll('[class*="easepick"]');
+                        easepickContainer = Array.from(allElements).find(el => 
+                            el.classList.toString().includes('easepick') && 
+                            el.offsetParent !== null // visible element
+                        );
+                    }
+                    
+                    // Check if click is inside the calendar container
+                    const isInsideEasepick = easepickContainer && (
+                        easepickContainer.contains(e.target) || 
+                        easepickContainer === e.target ||
+                        e.target.closest('.easepick-wrapper') ||
+                        e.target.closest('[class*="easepick"]')
+                    );
+                    
+                    // Check if click is on the button or inside the button
+                    const isButton = e.target === buttonElement || 
+                                   buttonElement.contains(e.target) ||
+                                   e.target.closest('button') === buttonElement ||
+                                   (e.target.closest('svg') && e.target.closest('svg').closest('button') === buttonElement);
+                    
+                    // Only close if click is outside both calendar and button
+                    if (!isInsideEasepick && !isButton) {
+                        picker.hide();
+                        document.removeEventListener('click', closeOnOutsideClick);
+                        setTimeout(() => {
+                            if (input.parentNode) input.remove();
+                        }, 300);
+                    }
+                };
+                
+                // Use normal bubbling (not capture) so calendar can handle its own clicks first
+                document.addEventListener('click', closeOnOutsideClick);
+            }, 200);
+        }, 100);
+    }
+
+    loadEasepickScript();
+}
+
 // Event listeners
 langEnButton.addEventListener('click', switchToEnglish);
 langDeButton.addEventListener('click', switchToGerman);
@@ -562,10 +719,32 @@ switchLanguage(savedLanguage);
 
 // Attach click event for booking buttons (delegated, works on dynamically added elements)
 document.body.addEventListener('click', function (e) {
-    if (e.target.classList.contains('easepick-trigger')) {
-        const card = e.target.closest('.bg-white');
+    const triggerButton = e.target.closest('.easepick-trigger');
+    if (triggerButton) {
+        const card = triggerButton.closest('.bg-white');
         const h3 = card?.querySelector('h3');
         const title = h3?.getAttribute('data-full-title') || h3?.textContent || '';
-        if (title) openDatePicker(title);
+        if (title) {
+            // Check if it's the calendar icon button (has calendar-view-button class)
+            const isCalendarButton = triggerButton.classList.contains('calendar-view-button');
+            if (isCalendarButton) {
+                e.stopPropagation(); // Prevent immediate close
+                
+                // Check if calendar is already open for this apartment
+                const existingInput = document.getElementById('calendar-view-input');
+                if (existingInput && existingInput.easepick) {
+                    // Toggle: if open, close it
+                    existingInput.easepick.hide();
+                    setTimeout(() => {
+                        if (existingInput.parentNode) existingInput.remove();
+                    }, 300);
+                } else {
+                    // Open calendar
+                    openCalendarView(title, triggerButton);
+                }
+            } else {
+                openDatePicker(title);
+            }
+        }
     }
 });
